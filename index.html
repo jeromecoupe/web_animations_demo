@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Card animation demo</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div class="c-card js-card-login" style="max-width: 340px;">
+    <div class="c-card__header">
+      <h1 class="c-h1">Welcome Back</h1>
+      <h2 class="c-h2">Sign in to continue</h2>
+    </div>
+    <div class="c-card__body">
+      <form class="c-form" id="form-login" method="post" action="process.php">
+        <div class="c-form__flow">
+
+          <section class="c-form__flowsection js-flowsection-credentials">
+            <h3 class="c-h4">Credentials</h3>
+            <div class="c-form__field">
+              <input class="c-form__input" type="email">
+            </div>
+            <div class="c-form__field">
+              <input class="c-form__input" type="password">
+            </div>
+            <div class="c-form__field">
+              <input class="c-button  c-button--full js-trigger-animation" type="submit" value="Continue">
+            </div>
+            <p class="u-margin-bottom-none  u-align-center"><a class="c-link-subtle" href="#">Forgot password ?</a></p>
+          </section>
+
+          <section class="c-form__flowsection u-align-center js-flowsection-confirmation">
+            <svg class="c-icon  u-margin-bottom-base js-confirmation-icon" width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img">
+              <title>Icon Check</title>
+              <desc>Well done</desc>
+              <g fill="none" fill-rule="evenodd">
+                <circle fill="#327087" cx="32" cy="32" r="32" />
+                <path d="M40.285 23L29 34.567l-5.286-5.011L20 33.272 29 42l15-15.285z" fill="#FFF" fill-rule="nonzero" />
+              </g>
+            </svg>
+            <div class="js-confirmation-message">
+              <h3 class="c-h2">We're all set</h3>
+              <h4 class="c-h4  c-h4--light">Let's go</h4>
+            </div>
+          </section>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+
+</html>
