@@ -4,15 +4,15 @@ const confirmationSection = document.querySelector(".js-flowsection-confirmation
 const confirmationIcon = document.querySelector(".js-confirmation-icon");
 const confirmationMessage = document.querySelector(".js-confirmation-message");
 const trigger = document.querySelector(".js-trigger-animation");
-const loginForm = document.getElementById("form-login");
+const loginForm = document.querySelector(".js-form-login");
 
-function _submitForm(form) {
+const _submitForm = form => {
   alert("finished");
   form.submit();
   master.reset();
-}
+};
 
-function _setup() {
+const _setup = () => {
   const tl = new TimelineLite();
 
   // set opacity to zero
@@ -31,10 +31,10 @@ function _setup() {
   });
 
   return tl;
-}
+};
 
 // animate form elements
-function _formElements() {
+const _formElements = () => {
   const tl = new TimelineLite();
 
   tl.add("formElements").staggerTo(
@@ -48,10 +48,10 @@ function _formElements() {
   );
 
   return tl;
-}
+};
 
 // animate Icon
-function _checkIcon() {
+const _checkIcon = () => {
   const tl = new TimelineLite();
 
   tl.add("checkIcon")
@@ -78,10 +78,10 @@ function _checkIcon() {
     );
 
   return tl;
-}
+};
 
 // animate confirmation message
-function _confirmationScreen() {
+const _confirmationScreen = () => {
   const tl = new TimelineLite();
 
   tl.add("message")
@@ -96,7 +96,7 @@ function _confirmationScreen() {
     );
 
   return tl;
-}
+};
 
 // create master timeline (paused + _submitForm callback)
 const master = new TimelineLite({
