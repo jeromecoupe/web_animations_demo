@@ -39,12 +39,12 @@ function _formElements() {
 
   tl.add("formElements").staggerTo(
     sectionCredentialsItems,
-    0.35,
+    0.2,
     {
       x: cardwidth * -1,
       ease: Back.easeIn
     },
-    0.15
+    0.1
   );
 
   return tl;
