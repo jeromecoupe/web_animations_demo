@@ -14,4 +14,4 @@ The goal here is to explain the basics of GSAP to beginners and to showcase how 
 
 `waapi` branch.
 
-Still some problems to fix but the basics are there.
+Works fine in Chrome with polyfill but still problems in other browsers.
