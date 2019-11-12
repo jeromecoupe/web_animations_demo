@@ -19,7 +19,6 @@ const loginForm = document.querySelector(".js-form-login");
  */
 
 function submitForm(form) {
-  alert("finished");
   form.submit();
   masterTimeline.pause("start");
 }
