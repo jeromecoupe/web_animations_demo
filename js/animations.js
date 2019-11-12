@@ -1,124 +1,137 @@
+// -------------------------------
+// Get elements
+// -------------------------------
 const cardwidth = document.querySelector(".js-card-login").offsetWidth;
-const sectionCredentialsItems = document.querySelectorAll(".js-flowsection-credentials > *");
-const confirmationSection = document.querySelector(".js-flowsection-confirmation");
+const sectionCredentialsItems = document.querySelectorAll(
+  ".js-flowsection-credentials > *"
+);
+const confirmationSection = document.querySelector(
+  ".js-flowsection-confirmation"
+);
 const confirmationIcon = document.querySelector(".js-confirmation-icon");
 const confirmationMessage = document.querySelector(".js-confirmation-message");
 const trigger = document.querySelector(".js-trigger-animation");
 const loginForm = document.querySelector(".js-form-login");
 
-const _submitForm = form => {
+/**
+ * Submit form and reset timeline to start
+ * @param {form} form - the form to submit
+ */
+
+function submitForm(form) {
   alert("finished");
   form.submit();
-  master.reset();
-};
+  masterTimeline.pause("start");
+}
 
-const _setup = () => {
-  const tl = new TimelineLite();
+/**
+ * Initial state of items
+ */
+
+function setup() {
+  // set visibility to visible if JS
+  gsap.set(confirmationSection, {
+    visibility: "visible"
+  });
 
   // set opacity to zero
-  tl.set([confirmationIcon, confirmationMessage], {
+  gsap.set([confirmationIcon, confirmationMessage], {
     opacity: 0
   });
 
   // scale down
-  tl.set(confirmationIcon, {
+  gsap.set(confirmationIcon, {
     scale: 0.1
   });
+}
 
-  // now that elements are opacity 0, make container visible
-  tl.set(confirmationSection, {
-    visibility: "visible"
+/**
+ * Form elements going offscreen (right)
+ * textfields and buttons
+ */
+
+function formElements() {
+  let tl = gsap.timeline();
+
+  tl.to(sectionCredentialsItems, {
+    stagger: 0.1,
+    duration: 0.2,
+    x: cardwidth * -1,
+    ease: "back.in(1.2)",
+    delay: 0.1
   });
 
   return tl;
-};
+}
 
-// animate form elements
-const _formElements = () => {
-  const tl = new TimelineLite();
+/**
+ * Icon (scale / opacity)
+ * simultaneous
+ */
 
-  tl.add("formElements").staggerTo(
-    sectionCredentialsItems,
-    0.2,
+function icon() {
+  let tl = gsap.timeline();
+
+  tl.to(confirmationIcon, {
+    delay: 0.25,
+    duration: 0.25,
+    opacity: 1,
+    ease: "power1.in"
+  });
+
+  tl.to(
+    confirmationIcon,
     {
-      x: cardwidth * -1,
-      ease: Back.easeIn
+      duration: 0.25,
+      scale: 1,
+      ease: "bounce.out"
     },
-    0.1
+    "-=0.25"
   );
 
   return tl;
-};
+}
 
-// animate Icon
-const _checkIcon = () => {
-  const tl = new TimelineLite();
+/**
+ * Confirmation message
+ * simply appears, simultaneous with button
+ */
 
-  tl.add("checkIcon")
-    // appear
-    .to(
-      confirmationIcon,
-      0.25,
-      {
-        opacity: 1,
-        ease: "Power1"
-      },
-      "+=0.25"
-    )
+function message() {
+  let tl = gsap.timeline();
 
-    // bounce scaling
-    .to(
-      confirmationIcon,
-      0.25,
-      {
-        scale: 1,
-        ease: "Bounce.easeOut"
-      },
-      "-=0.25"
-    );
+  tl.to(confirmationMessage, {
+    delay: 0.1,
+    duration: 0.25,
+    opacity: 1
+  });
 
   return tl;
-};
-
-// animate confirmation message
-const _confirmationScreen = () => {
-  const tl = new TimelineLite();
-
-  tl.add("message")
-    // appear
-    .to(
-      confirmationMessage,
-      0.25,
-      {
-        opacity: 1
-      },
-      "+=0.25"
-    );
-
-  return tl;
-};
+}
 
 // create master timeline (paused + _submitForm callback)
-const master = new TimelineLite({
+let masterTimeline = gsap.timeline({
   paused: true,
-  onComplete: () => {
-    _submitForm(loginForm);
+  onComplete: function() {
+    setTimeout(function() {
+      submitForm(loginForm);
+    }, 750);
   }
 });
 
 // add timelines to master timeline and label them
-master
-  .add(_setup())
-  .add(_formElements(), "animForm")
-  .add(_checkIcon(), "animIcon")
-  .add(_confirmationScreen(), "animMessage");
+masterTimeline
+  .add(setup(), "start")
+  .add(formElements(), "fields")
+  .add(icon(), "icon")
+  .add(message(), "message");
 
 // start animation
 trigger.addEventListener(
   "click",
-  el => {
-    el.preventDefault();
-    master.play();
+  function(event) {
+    event.preventDefault();
+    masterTimeline.play();
   },
   false
 );
